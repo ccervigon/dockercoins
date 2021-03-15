@@ -41,7 +41,7 @@ jobs:
           done
         for app in hasher redis rng worker
           do \
-            docker logs ${app]
+            docker logs ${app}
           done
   swarm:
     runs-on: ubuntu-18.04
