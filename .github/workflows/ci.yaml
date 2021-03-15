@@ -82,6 +82,7 @@ jobs:
         # kubectl apply -f ${compose}
         # Despliegue en swarm
         docker stack deploy -c ${compose} ${project}
+        docker service logs ${project}_webui 2>& 1
         while true
           do \
             sleep 10
