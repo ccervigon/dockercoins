@@ -26,7 +26,7 @@ services:
       - 8080
     healthcheck:
       interval: 10s
-      retry: 3
+      #retry: 3
       start_period: 30s
       test: wget -q --spyder localhost:8080
       timeout: 1s
@@ -48,7 +48,7 @@ services:
       - 8080
     healthcheck:
       interval: 10s
-      retry: 3
+      #retry: 3
       start_period: 30s
       test: redis -cli
       timeout: 1s
@@ -72,7 +72,7 @@ services:
       - 8080
     healthcheck:
       interval: 10s
-      retry: 3
+      #retry: 3
       start_period: 30s
       test: wget -q --spyder localhost:8080
       timeout: 1s
@@ -94,7 +94,7 @@ services:
       - 8080
     healthcheck:
       interval: 10s
-      retry: 3
+      #retry: 3
       start_period: 30s
       test: curl -f localhost:8080
       timeout: 1s
@@ -115,7 +115,7 @@ services:
           memory: 100M
     healthcheck:
       interval: 10s
-      retry: 3
+      #retry: 3
       start_period: 30s
       test: netstat -nt | grep ESTABLISHED | grep -q 6379
       timeout: 1s
