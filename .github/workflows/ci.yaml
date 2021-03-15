@@ -82,7 +82,7 @@ jobs:
         # kubectl apply -f ${compose}
         # Despliegue en swarm
         docker stack deploy -c ${compose} ${project}
-        docker service ls | grep '${project}'
+        docker service ls | grep ${project}
         while true
           do \
             sleep 10
