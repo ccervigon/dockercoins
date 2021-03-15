@@ -115,7 +115,7 @@ jobs:
     - name: test
       run: |
         set -x
-        docker build -t ccervigonavila/phpinfo-2:testing .
+        docker build -t ccervigonavila/dockercoins:testing .
         sudo apt-get update -y
         # sudo apt-get install -y docker.io
         # sudo systemctl enable --now docker
@@ -144,7 +144,8 @@ jobs:
         # Habilitar el master
         master=$( kubectl get node | grep master | awk '{ print $1 }' )
         kubectl taint node ${master} node-role.kubernetes.io/master:NoSchedule-
-        compose=etc/kubernetes/manifests/phpinfo-2.yaml
+        project=dockercoins
+        compose=etc/kubernetes/manifests/${project}.yaml
         sed -i /image:/s/latest/testing/ ${compose}
         sed -i /imagePullPolicy/s/Always/Never/ ${compose}
         # Despliegue en Openshift
@@ -152,7 +153,7 @@ jobs:
         # Despliegue Kubernetes
         kubectl apply -f ${compose}
         # Despliegue en swarm
-        # docker stack deploy -c ${compose} phpinfo-2
+        # docker stack deploy -c ${compose} ${project}
         while true
           do \
             sleep 10
