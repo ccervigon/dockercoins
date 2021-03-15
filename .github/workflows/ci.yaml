@@ -31,7 +31,7 @@ jobs:
           done
         for app in hasher rng
           do \
-            docker network connect ${network} worker
+            docker network connect worker ${app}
           done
         # Testing
         while true
