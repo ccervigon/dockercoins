@@ -82,10 +82,10 @@ jobs:
         # kubectl apply -f ${compose}
         # Despliegue en swarm
         docker stack deploy -c ${compose} ${project}
+        docker service ls | grep '${project}'
         while true
           do \
             sleep 10
-            docker service logs ${project}_webui 2>& 1
             docker service logs ${project}_webui 2>& 1 | grep 'WEBUI running on port' && break
           done
         while true
