@@ -63,7 +63,6 @@ services:
       placement:
         constraints:
           - node.role == worker
-      replicas: 1
       resources:
         limits:
           cpus: "0.1"
