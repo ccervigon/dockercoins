@@ -85,7 +85,6 @@ jobs:
         while true
           do \
             sleep 10
-            docker service ls | grep ${project}
             docker service logs ${project}_webui 2>& 1 | grep 'WEBUI running on port' && break
           done
         while true
@@ -116,7 +115,11 @@ jobs:
     - name: test
       run: |
         set -x
-        docker build -t ccervigonavila/dockercoins:testing .
+        project=dockercoins
+        for app in hasher rng webui worker
+          do
+            docker build -t ccervigon/${project}:testing-${app} ${app}
+          done
         sudo apt-get update -y
         # sudo apt-get install -y docker.io
         # sudo systemctl enable --now docker
@@ -135,7 +138,7 @@ jobs:
         sudo chown -R $( id -u ):$( id -g ) ${HOME}/.kube
         kubectl apply -f https://docs.projectcalico.org/v3.17/manifests/calico.yaml
         while true
-          do \
+          do
             kubectl get node | grep Ready | grep -v NotReady && break
             sleep 10
           done
@@ -145,7 +148,6 @@ jobs:
         # Habilitar el master
         master=$( kubectl get node | grep master | awk '{ print $1 }' )
         kubectl taint node ${master} node-role.kubernetes.io/master:NoSchedule-
-        project=dockercoins
         compose=etc/kubernetes/manifests/${project}.yaml
         sed -i /image:/s/latest/testing/ ${compose}
         sed -i /imagePullPolicy/s/Always/Never/ ${compose}
@@ -158,13 +160,25 @@ jobs:
         while true
           do \
             sleep 10
-            kubectl describe deploy
-            kubectl describe rs
-            kubectl describe po
-            kubectl get deploy | grep "phpinfo-2.*\([0-9]\)/\1" && break
+            kubectl logs deploy/${project}_webui 2>& 1 | grep 'WEBUI running on port' && break
           done
         while true
           do \
             sleep 10
-            kubectl logs deploy/phpinfo-2 2>& 1 | grep 'PHP .* Development Server .* started' && break
+            kubectl logs deploy/${project}_hasher 2>& 1 | grep 'Sinatra .* has taken the stage on .* for development with backup from Thin' && break
+          done
+        while true
+          do \
+            sleep 10
+            kubectl logs deploy/${project}_redis 2>& 1 | grep 'Ready to accept connections' && break
+          done
+        while true
+          do \
+            sleep 10
+            kubectl logs deploy/${project}_rng 2>& 1 | grep 'Running on' && break
+          done
+        while true
+          do \
+            sleep 10
+            kubectl logs deploy/${project}_worker 2>& 1 | grep 'Coin found' && break
           done
