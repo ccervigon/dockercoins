@@ -37,6 +37,7 @@ spec:
     spec:
       containers:
         -
+          name: hasher
           image: ccervigon/dockercoins:latest-hasher
           imagePullPolicy: Always
           ports:
@@ -60,6 +61,7 @@ spec:
     spec:
       containers:
         -
+          name: redis
           image: redis
           imagePullPolicy: Always
           ports:
@@ -91,6 +93,7 @@ spec:
     spec:
       containers:
         -
+          name: webui
           image: ccervigon/dockercoins:latest-webui
           imagePullPolicy: Always
           ports:
@@ -114,6 +117,7 @@ spec:
     spec:
       containers:
         -
+          name: worker
           image: ccervigon/dockercoins:latest-worker
           imagePullPolicy: Always
           ports:
