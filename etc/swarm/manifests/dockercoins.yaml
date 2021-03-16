@@ -28,9 +28,9 @@ services:
       interval: 10s
       retries: 3
       start_period: 30s
-      test: wget -q --spyder localhost:8080
+      test: wget -q --spider localhost:8080
       timeout: 1s
-    image: ccervigonavila/dockercoins:latest-hasher
+    image: ccervigon/dockercoins:latest-hasher
     networks:
       - hasher
   redis:
@@ -45,12 +45,12 @@ services:
           cpus: "0.1"
           memory: 100M
     expose:
-      - 8080
+      - 6379
     healthcheck:
       interval: 10s
       retries: 3
       start_period: 30s
-      test: redis -cli
+      test: redis-cli
       timeout: 1s
     image: redis:6.0.9-alpine3.12@sha256:aa31e6d2afc72d2222ed3953587197c324f615861771637a64053f9d99ba4b74
     networks:
@@ -73,9 +73,9 @@ services:
       interval: 10s
       retries: 3
       start_period: 30s
-      test: wget -q --spyder localhost:8080
+      test: wget -q --spider localhost:8080
       timeout: 1s
-    image: ccervigonavila/dockercoins:latest-rng
+    image: ccervigon/dockercoins:latest-rng
     networks:
       - rng
   webui:
@@ -97,7 +97,7 @@ services:
       start_period: 30s
       test: curl -f localhost:8080
       timeout: 1s
-    image: ccervigonavila/dockercoins:latest-webui
+    image: ccervigon/dockercoins:latest-webui
     networks:
       - webui
       - redis
@@ -118,7 +118,7 @@ services:
       start_period: 30s
       test: netstat -nt | grep ESTABLISHED | grep -q 6379
       timeout: 1s
-    image: ccervigonavila/dockercoins:latest-worker
+    image: ccervigon/dockercoins:latest-worker
     networks:
       - hasher
       - redis
