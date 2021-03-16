@@ -175,7 +175,7 @@ jobs:
         while true
           do \
             sleep 10
-            kubectl logs deploy/rng 2>& 1 | grep 'Running on' && break
+            kubectl logs ds/rng 2>& 1 | grep 'Running on' && break
           done
         while true
           do \
