@@ -13,6 +13,7 @@ spec:
     spec:
       containers:
         -
+          name: rng
           image: ccervigon/dockercoins:latest-rng
           imagePullPolicy: Always
           ports:
